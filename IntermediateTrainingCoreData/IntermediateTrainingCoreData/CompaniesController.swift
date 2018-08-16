@@ -9,16 +9,78 @@
 import UIKit
 
 class CompaniesController: UITableViewController {
+	
+	let companies = [
+		Company(name: "Apple", founded: Date()),
+		Company(name: "Google", founded: Date()),
+		Company(name: "Facebook", founded: Date())
+	]
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		tableView.backgroundColor = .yellow
 		
+		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
+		tableView.backgroundColor = .darkBlue
+		navigationItem.title = "Companies"
 
+		let plusButton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCompanyHandle))
+		navigationItem.setRightBarButton(plusButton, animated: true)
+	
 	}
+	
+	@objc func addCompanyHandle() {
+		let createCompanyController = CreateCompanyController()
+		let createCompanyNavigator = CustomNavigationController(rootViewController: createCompanyController)
+		
+		present(createCompanyNavigator, animated: true, completion: nil)
+	}
+	
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let view = UIView()
+		view.backgroundColor = .lightBlue
+		return view
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 40
+	}
+	
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return companies.count
+	}
+	
+	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath)
+		cell.backgroundColor = .tealColor
+		cell.textLabel?.textColor = .white
+		cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+		
+		let company = companies[indexPath.row]
+		cell.textLabel?.text = company.name
+		return cell
+	}
+	
+	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+		let view = UIView()
+		return view
+	}
+	
+	
 
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
