@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
+
 	// test test developer
 	var companies = [Company]()
 	
