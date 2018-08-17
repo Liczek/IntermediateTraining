@@ -19,15 +19,12 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 		
 		fetchData()
 		
-		
-		
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
 		tableView.backgroundColor = .darkBlue
 		navigationItem.title = "Companies"
 
 		let plusButton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCompanyHandle))
 		navigationItem.setRightBarButton(plusButton, animated: true)
-	
 	}
 	
 	@objc func addCompanyHandle() {
@@ -91,6 +88,30 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 		let view = UIView()
 		return view
+	}
+	
+	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+		let company = self.companies[indexPath.row]
+		let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
+			print("deleting", company.name ?? "")
+			
+			self.companies.remove(at: indexPath.row)
+			self.tableView.deleteRows(at: [indexPath], with: .automatic)
+			
+			let context = CoreDataManager.shared.persistentContainer.viewContext
+			context.delete(company)
+			
+			do {
+				try context.save()
+			} catch let saveError {
+				print("Failed to save companies", saveError)
+			}
+		}
+		
+		let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, indexPath) in
+			print("Edit company:", company.name ?? "")
+		}
+		return [deleteAction, editAction]
 	}
 	
 	
