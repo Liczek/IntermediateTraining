@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
-	
+	//test
 	var companies = [Company]()
 	
 	override func viewDidLoad() {
