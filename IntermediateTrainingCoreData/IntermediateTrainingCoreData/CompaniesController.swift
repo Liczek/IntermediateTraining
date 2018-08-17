@@ -11,32 +11,15 @@ import CoreData
 
 class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
 
-	// test test developer
+	
 	var companies = [Company]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let persistentContainer = NSPersistentContainer(name: "IntermediateTrainingCoreData")
-		persistentContainer.loadPersistentStores { (storeDescription, error) in
-			if let error = error {
-				print("Failde to load persistent store", error)
-				fatalError()
-			}
-		}
-		let context = persistentContainer.viewContext
+		fetchData()
 		
-		let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
 		
-		do {
-			let companies = try context.fetch(fetchRequest)
-			companies.forEach { (company) in
-				print(company.name ?? "abc")
-			}
-
-		} catch let fetchError {
-			print("Failde to fetch", fetchError)
-		}
 		
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
 		tableView.backgroundColor = .darkBlue
@@ -55,10 +38,28 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 	}
 	
 	func addCompany(company: Company) {
-		dismiss(animated: true) {
 			let newIndexPath = IndexPath(row: self.companies.count, section: 0)
 			self.companies.append(company)
 			self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+	}
+	
+	func fetchData() {
+		
+		let context = CoreDataManager.shared.persistentContainer.viewContext
+		
+		let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
+		
+		do {
+			let companies = try context.fetch(fetchRequest)
+			companies.forEach { (company) in
+				print(company.name ?? "abc")
+			}
+			
+			self.companies = companies
+			self.tableView.reloadData()
+			
+		} catch let fetchError {
+			print("Failde to fetch", fetchError)
 		}
 	}
 	
