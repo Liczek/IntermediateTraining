@@ -8,9 +8,9 @@
 
 import UIKit
 
-class CompaniesController: UITableViewController {
+class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
 	
-	let companies = [
+	var companies = [
 		Company(name: "Apple", founded: Date()),
 		Company(name: "Google", founded: Date()),
 		Company(name: "Facebook", founded: Date())
@@ -32,8 +32,16 @@ class CompaniesController: UITableViewController {
 	@objc func addCompanyHandle() {
 		let createCompanyController = CreateCompanyController()
 		let createCompanyNavigator = CustomNavigationController(rootViewController: createCompanyController)
-		
+		createCompanyController.delegate = self
 		present(createCompanyNavigator, animated: true, completion: nil)
+	}
+	
+	func addCompany(company: Company) {
+		dismiss(animated: true) {
+			let newIndexPath = IndexPath(row: self.companies.count, section: 0)
+			self.companies.append(company)
+			self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+		}
 	}
 	
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

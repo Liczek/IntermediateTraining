@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol CreateCompanyControllerDelegate {
+	func addCompany(company: Company)
+}
+
 class CreateCompanyController: UIViewController {
+	
+	var delegate: CreateCompanyControllerDelegate?
 	
 	let lightBlueBackgroudView: UIView = {
 		let view = UIView()
@@ -38,14 +44,8 @@ class CreateCompanyController: UIViewController {
 		
 		view.backgroundColor = .darkBlue
 		title = "Create Company"
-		let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonHandle))
-		navigationItem.setLeftBarButton(cancelButton, animated: true)
 		
-		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
-		
-		view.addSubview(lightBlueBackgroudView)
-		view.addSubview(nameLabel)
-		view.addSubview(nameTextField)
+		addObjects()
 		setConstraints()
 	}
 	
@@ -54,7 +54,20 @@ class CreateCompanyController: UIViewController {
 	}
 	
 	@objc func handleSave() {
-		print("Save new company")
+		guard let companyName = nameTextField.text else { return }
+		let company = Company(name: companyName, founded: Date())
+		delegate?.addCompany(company: company)
+	}
+	
+	func addObjects() {
+		
+		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonHandle))
+		
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+		
+		view.addSubview(lightBlueBackgroudView)
+		view.addSubview(nameLabel)
+		view.addSubview(nameTextField)
 	}
 	
 	func setConstraints() {
