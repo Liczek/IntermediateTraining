@@ -10,20 +10,13 @@ import UIKit
 import CoreData
 
 class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
-	//test nauka 1
+	
 	var companies = [Company]()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		let persistentContainer = NSPersistentContainer(name: "IntermediateTrainingCoreData")
-		persistentContainer.loadPersistentStores { (storeDescription, error) in
-			if let error = error {
-				print("Failde to load persistent store", error)
-				fatalError()
-			}
-		}
-		let context = persistentContainer.viewContext
+		let context = CoreDataManager.shared.persistentContainer.viewContext
 		
 		let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
 		
@@ -32,6 +25,9 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 			companies.forEach { (company) in
 				print(company.name ?? "abc")
 			}
+			
+			self.companies = companies
+			self.tableView.reloadData()
 
 		} catch let fetchError {
 			print("Failde to fetch", fetchError)
@@ -54,11 +50,9 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 	}
 	
 	func addCompany(company: Company) {
-		dismiss(animated: true) {
 			let newIndexPath = IndexPath(row: self.companies.count, section: 0)
 			self.companies.append(company)
 			self.tableView.insertRows(at: [newIndexPath], with: .automatic)
-		}
 	}
 	
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
