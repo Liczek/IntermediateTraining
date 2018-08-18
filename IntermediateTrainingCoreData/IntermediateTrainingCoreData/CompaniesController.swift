@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 
 class CompaniesController: UITableViewController, CreateCompanyControllerDelegate {
-
 	
 	var companies = [Company]()
 	
@@ -38,6 +37,12 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 			let newIndexPath = IndexPath(row: self.companies.count, section: 0)
 			self.companies.append(company)
 			self.tableView.insertRows(at: [newIndexPath], with: .automatic)
+	}
+	
+	func didEditCompany(company: Company) {
+		guard let row = companies.index(of: company) else {return}
+		let newIndexPath = IndexPath(row: row, section: 0)
+		tableView.reloadRows(at: [newIndexPath], with: .middle)
 	}
 	
 	func fetchData() {
@@ -91,29 +96,39 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 	}
 	
 	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-		let company = self.companies[indexPath.row]
-		let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
-			print("deleting", company.name ?? "")
-			
-			self.companies.remove(at: indexPath.row)
-			self.tableView.deleteRows(at: [indexPath], with: .automatic)
-			
-			let context = CoreDataManager.shared.persistentContainer.viewContext
-			context.delete(company)
-			
-			do {
-				try context.save()
-			} catch let saveError {
-				print("Failed to save companies", saveError)
-			}
-		}
 		
-		let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, indexPath) in
-			print("Edit company:", company.name ?? "")
-		}
+		let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete", handler: deleteActionHandler)
+		deleteAction.backgroundColor = .lightRed
+		
+		
+		let editAction = UITableViewRowAction(style: .normal, title: "Edit", handler: editActionHandler)
+		editAction.backgroundColor = .darkBlue
 		return [deleteAction, editAction]
 	}
 	
+	private func deleteActionHandler(action: UITableViewRowAction, indexPath: IndexPath) {
+		let company = self.companies[indexPath.row]
+		self.companies.remove(at: indexPath.row)
+		self.tableView.deleteRows(at: [indexPath], with: .automatic)
+		
+		let context = CoreDataManager.shared.persistentContainer.viewContext
+		context.delete(company)
+		
+		do {
+			try context.save()
+		} catch let saveError {
+			print("Failed to save companies", saveError)
+		}
+	}
+	
+	private func editActionHandler(action: UITableViewRowAction, indexPath: IndexPath) {
+		let company = self.companies[indexPath.row]
+		let editCompanyController = CreateCompanyController()
+		editCompanyController.delegate = self
+		let navController = CustomNavigationController(rootViewController: editCompanyController)
+		self.present(navController, animated: true, completion: nil)
+		editCompanyController.company = company
+	}
 	
 
 	

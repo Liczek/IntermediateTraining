@@ -11,9 +11,16 @@ import CoreData
 
 protocol CreateCompanyControllerDelegate {
 	func addCompany(company: Company)
+	func didEditCompany(company: Company)
 }
 
 class CreateCompanyController: UIViewController {
+	
+	var company: Company? {
+		didSet {
+			nameTextField.text = company?.name
+		}
+	}
 	
 	var delegate: CreateCompanyControllerDelegate?
 	
@@ -40,6 +47,11 @@ class CreateCompanyController: UIViewController {
 		return textField
 	}()
 	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationItem.title = company == nil ? "Create Company" : "Edit Company"
+	}
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -56,8 +68,16 @@ class CreateCompanyController: UIViewController {
 	
 	@objc func handleSave() {
 		
-		print("test Save")
+		if company == nil {
+			createCompany()
+		} else {
+			saveCompanyChanges()
+		}
 		
+		
+	}
+	
+	func createCompany() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
 		let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
 		
@@ -71,6 +91,21 @@ class CreateCompanyController: UIViewController {
 		} catch let saveError {
 			print("Faild to save context", saveError)
 		}
+	}
+	
+	func saveCompanyChanges() {
+		let context = CoreDataManager.shared.persistentContainer.viewContext
+		company?.setValue(nameTextField.text, forKey: "name")
+		
+		do {
+			try context.save()
+			dismiss(animated: true) {
+				self.delegate?.didEditCompany(company: self.company!)
+			}
+		} catch let saveErr {
+			print("Failed to update company:", saveErr)
+		}
+		
 	}
 	
 	func addObjects() {

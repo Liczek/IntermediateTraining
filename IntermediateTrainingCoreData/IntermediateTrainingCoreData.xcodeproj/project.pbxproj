@@ -66,10 +66,10 @@
 			children = (
 				DA5462212125FEFD003E74F0 /* AppDelegate.swift */,
 				DA5462232125FEFD003E74F0 /* CompaniesController.swift */,
-				DA49515521275EB8006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld */,
 				DA49515321260FC4006C5EAC /* CreateCompanyController.swift */,
 				DA49515E21277D3C006C5EAC /* CoreDataManager.swift */,
 				DA5462252125FEFD003E74F0 /* Main.storyboard */,
+				DA49515521275EB8006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld */,
 				DA5462282125FEFF003E74F0 /* Assets.xcassets */,
 				DA54622A2125FEFF003E74F0 /* LaunchScreen.storyboard */,
 				DA54622D2125FEFF003E74F0 /* Info.plist */,
