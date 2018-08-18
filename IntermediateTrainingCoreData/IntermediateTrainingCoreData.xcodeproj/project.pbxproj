@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA49516321284115006C5EAC /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49516221284115006C5EAC /* Company.swift */; };
+		DA49516521284329006C5EAC /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49516421284329006C5EAC /* UIColor+theme.swift */; };
+		DA4951672128477A006C5EAC /* CreateCompanyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4951662128477A006C5EAC /* CreateCompanyController.swift */; };
+		DA49516A21285686006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA49516821285686006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld */; };
+		DA49516C2128574F006C5EAC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49516B2128574F006C5EAC /* CoreDataManager.swift */; };
 		DA5462222125FEFD003E74F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5462212125FEFD003E74F0 /* AppDelegate.swift */; };
 		DA5462242125FEFD003E74F0 /* CompaniesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5462232125FEFD003E74F0 /* CompaniesController.swift */; };
 		DA5462272125FEFD003E74F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5462252125FEFD003E74F0 /* Main.storyboard */; };
@@ -15,6 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA49516221284115006C5EAC /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		DA49516421284329006C5EAC /* UIColor+theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+theme.swift"; sourceTree = "<group>"; };
+		DA4951662128477A006C5EAC /* CreateCompanyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyController.swift; sourceTree = "<group>"; };
+		DA49516921285686006C5EAC /* IntermediateTrainingCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IntermediateTrainingCoreData.xcdatamodel; sourceTree = "<group>"; };
+		DA49516B2128574F006C5EAC /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		DA54621E2125FEFD003E74F0 /* IntermediateTrainingCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntermediateTrainingCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5462212125FEFD003E74F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA5462232125FEFD003E74F0 /* CompaniesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesController.swift; sourceTree = "<group>"; };
@@ -56,6 +66,11 @@
 			children = (
 				DA5462212125FEFD003E74F0 /* AppDelegate.swift */,
 				DA5462232125FEFD003E74F0 /* CompaniesController.swift */,
+				DA4951662128477A006C5EAC /* CreateCompanyController.swift */,
+				DA49516B2128574F006C5EAC /* CoreDataManager.swift */,
+				DA49516421284329006C5EAC /* UIColor+theme.swift */,
+				DA49516221284115006C5EAC /* Company.swift */,
+				DA49516821285686006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld */,
 				DA5462252125FEFD003E74F0 /* Main.storyboard */,
 				DA5462282125FEFF003E74F0 /* Assets.xcassets */,
 				DA54622A2125FEFF003E74F0 /* LaunchScreen.storyboard */,
@@ -136,7 +151,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA5462242125FEFD003E74F0 /* CompaniesController.swift in Sources */,
+				DA49516A21285686006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld in Sources */,
+				DA49516521284329006C5EAC /* UIColor+theme.swift in Sources */,
+				DA4951672128477A006C5EAC /* CreateCompanyController.swift in Sources */,
 				DA5462222125FEFD003E74F0 /* AppDelegate.swift in Sources */,
+				DA49516C2128574F006C5EAC /* CoreDataManager.swift in Sources */,
+				DA49516321284115006C5EAC /* Company.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +354,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		DA49516821285686006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				DA49516921285686006C5EAC /* IntermediateTrainingCoreData.xcdatamodel */,
+			);
+			currentVersion = DA49516921285686006C5EAC /* IntermediateTrainingCoreData.xcdatamodel */;
+			path = IntermediateTrainingCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = DA5462162125FEFD003E74F0 /* Project object */;
 }
