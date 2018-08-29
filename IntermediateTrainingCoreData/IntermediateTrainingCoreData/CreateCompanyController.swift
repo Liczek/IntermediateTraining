@@ -14,11 +14,19 @@ protocol CreateCompanyControllerDelegate {
 	func didEditCompany(company: Company)
 }
 
-class CreateCompanyController: UIViewController {
+class CreateCompanyController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 	
 	var company: Company? {
 		didSet {
+			guard let founded = company?.founded else {return}
 			nameTextField.text = company?.name
+			datePicker.date	= founded
+			if let imageData = company?.imageData {
+				companyImageView.image = UIImage(data: imageData)
+				makeImageRounded()
+				
+			}
+			
 		}
 	}
 	
@@ -29,6 +37,14 @@ class CreateCompanyController: UIViewController {
 		view.backgroundColor = .lightBlue
 		view.translatesAutoresizingMaskIntoConstraints = false
 		return view
+	}()
+	
+	lazy var companyImageView: UIImageView = {
+		let image = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
+		image.translatesAutoresizingMaskIntoConstraints = false
+		image.contentMode = .scaleAspectFill
+		image.isUserInteractionEnabled = true
+		return image
 	}()
 	
 	let nameLabel: UILabel = {
@@ -47,6 +63,14 @@ class CreateCompanyController: UIViewController {
 		return textField
 	}()
 	
+	let datePicker: UIDatePicker = {
+		let dp = UIDatePicker()
+		dp.date = Date()
+		dp.datePickerMode = .date
+		dp.translatesAutoresizingMaskIntoConstraints = false
+		return dp
+	}()
+	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		navigationItem.title = company == nil ? "Create Company" : "Edit Company"
@@ -60,6 +84,8 @@ class CreateCompanyController: UIViewController {
 		
 		addObjects()
 		setConstraints()
+		let tapCompanyImageView = UITapGestureRecognizer(target: self, action: #selector(pickImageForCompany))
+		companyImageView.addGestureRecognizer(tapCompanyImageView)
 	}
 	
 	@objc func cancelButtonHandle() {
@@ -82,6 +108,10 @@ class CreateCompanyController: UIViewController {
 		let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
 		
 		company.setValue(nameTextField.text, forKey: "name")
+		company.setValue(datePicker.date, forKey: "founded")
+		guard let image = companyImageView.image else {return}
+		let imageData = UIImageJPEGRepresentation(image, 1)
+		company.setValue(imageData, forKey: "imageData")
 		
 		do {
 			try context.save()
@@ -95,7 +125,11 @@ class CreateCompanyController: UIViewController {
 	
 	func saveCompanyChanges() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
-		company?.setValue(nameTextField.text, forKey: "name")
+		company?.name = nameTextField.text
+		company?.founded = datePicker.date
+		guard let image = companyImageView.image else {return}
+		let imageData = UIImageJPEGRepresentation(image, 1)
+		company?.imageData = imageData
 		
 		do {
 			try context.save()
@@ -115,8 +149,10 @@ class CreateCompanyController: UIViewController {
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
 		
 		view.addSubview(lightBlueBackgroudView)
+		view.addSubview(companyImageView)
 		view.addSubview(nameLabel)
 		view.addSubview(nameTextField)
+		view.addSubview(datePicker)
 	}
 	
 	func setConstraints() {
@@ -125,17 +161,28 @@ class CreateCompanyController: UIViewController {
 			lightBlueBackgroudView.leftAnchor.constraint(equalTo: view.leftAnchor),
 			lightBlueBackgroudView.rightAnchor.constraint(equalTo: view.rightAnchor),
 			lightBlueBackgroudView.topAnchor.constraint(equalTo: view.topAnchor),
-			lightBlueBackgroudView.heightAnchor.constraint(equalToConstant: 50)
+			lightBlueBackgroudView.heightAnchor.constraint(equalToConstant: 350)
 		]
 		lightBlueBGViewConstraints.forEach { (constraint) in
 			constraint.isActive = true
 		}
 		
-		
+		let companyImageViewConstraints = [
+			companyImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
+//			companyImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+//			companyImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+			companyImageView.widthAnchor.constraint(equalToConstant: 100),
+			companyImageView.heightAnchor.constraint(equalToConstant: 100),
+			companyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+		]
+		companyImageViewConstraints.forEach { (constraint) in
+			constraint.isActive = true
+		}
+				
 		let nameLabelConstraints = [
 		nameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
 		nameLabel.widthAnchor.constraint(equalToConstant: 100),
-		nameLabel.topAnchor.constraint(equalTo: view.topAnchor),
+		nameLabel.topAnchor.constraint(equalTo: companyImageView.bottomAnchor),
 		nameLabel.heightAnchor.constraint(equalToConstant: 50)
 		]
 		nameLabelConstraints.forEach { (constraint) in
@@ -152,9 +199,45 @@ class CreateCompanyController: UIViewController {
 			constraint.isActive = true
 		}
 		
+		let datePickerConstraints = [
+			datePicker.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+			datePicker.leadingAnchor.constraint(equalTo: lightBlueBackgroudView.leadingAnchor),
+			datePicker.trailingAnchor.constraint(equalTo: lightBlueBackgroudView.trailingAnchor),
+			datePicker.bottomAnchor.constraint(equalTo: lightBlueBackgroudView.bottomAnchor)
+		]
+		datePickerConstraints.forEach { (constraint) in
+			constraint.isActive = true
+		}
 	}
 	
+	@objc func pickImageForCompany() {
+		let imagePickerController = UIImagePickerController()
+		imagePickerController.delegate = self
+		imagePickerController.allowsEditing = true
+		present(imagePickerController, animated: true, completion: nil)
+	}
 	
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+		dismiss(animated: true, completion: nil)
+	}
+	
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+		if let editedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+			self.companyImageView.image = editedImage
+		} else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+			companyImageView.image = originalImage
+		}
+		makeImageRounded()
+		dismiss(animated: true, completion: nil)
+	}
+	
+	private func makeImageRounded() {
+		companyImageView.layer.cornerRadius = companyImageView.frame.width / 2
+		print(companyImageView.frame.width / 2)
+		companyImageView.clipsToBounds = true
+		companyImageView.layer.borderColor = UIColor.darkBlue.cgColor
+		companyImageView.layer.borderWidth = 2
+	}
 	
 	
 	

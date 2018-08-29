@@ -86,7 +86,19 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 		cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
 		
 		let company = companies[indexPath.row]
-		cell.textLabel?.text = company.name
+		if let imageData = company.imageData {
+			cell.imageView?.image = UIImage(data: imageData)
+		} else {
+			cell.imageView?.image = #imageLiteral(resourceName: "select_photo_empty")
+		}
+		
+		
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "dd MMMM yyyy"
+		if let founded = company.founded, let name = company.name {
+			let stringDate = dateFormatter.string(from: founded)
+			cell.textLabel?.text = "\(name) founded: \(stringDate)"
+		}
 		return cell
 	}
 	
