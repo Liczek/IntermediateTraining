@@ -24,13 +24,34 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 
 		let plusButton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCompanyHandle))
 		navigationItem.setRightBarButton(plusButton, animated: true)
+		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(resetAll))
 	}
 	
-	@objc func addCompanyHandle() {
+	@objc private func addCompanyHandle() {
 		let createCompanyController = CreateCompanyController()
 		let createCompanyNavigator = CustomNavigationController(rootViewController: createCompanyController)
 		createCompanyController.delegate = self
 		present(createCompanyNavigator, animated: true, completion: nil)
+	}
+	
+	@objc private func resetAll() {
+		let context = CoreDataManager.shared.persistentContainer.viewContext
+		let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+		do {
+			try context.execute(batchDeleteRequest)
+			var deletedRowIndexPaths = [IndexPath]()
+			for (index, _) in companies.enumerated() {
+				let indexPath = IndexPath(row: index, section: 0)
+				deletedRowIndexPaths.append(indexPath)
+			}
+			companies.removeAll()
+			tableView.deleteRows(at: deletedRowIndexPaths, with: .left)
+			
+		} catch let delErr {
+			print("Failed to batchDeleteRequest at Core Data", delErr)
+		}
+		
+		
 	}
 	
 	func addCompany(company: Company) {
@@ -75,6 +96,19 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 		return 40
 	}
 	
+	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+		let label = UILabel()
+		label.text = "Add companies by clicking + button"
+		label.font = UIFont.boldSystemFont(ofSize: 16)
+		label.textColor = .white
+		label.textAlignment = .center
+		return label
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return companies.count == 0 ? 150 : 0
+	}
+	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return companies.count
 	}
@@ -100,11 +134,6 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 			cell.textLabel?.text = "\(name) founded: \(stringDate)"
 		}
 		return cell
-	}
-	
-	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-		let view = UIView()
-		return view
 	}
 	
 	override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {

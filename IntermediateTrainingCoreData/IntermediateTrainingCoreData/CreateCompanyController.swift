@@ -86,6 +86,8 @@ class CreateCompanyController: UIViewController, UINavigationControllerDelegate,
 		setConstraints()
 		let tapCompanyImageView = UITapGestureRecognizer(target: self, action: #selector(pickImageForCompany))
 		companyImageView.addGestureRecognizer(tapCompanyImageView)
+		
+		nameTextField.becomeFirstResponder()
 	}
 	
 	@objc func cancelButtonHandle() {
