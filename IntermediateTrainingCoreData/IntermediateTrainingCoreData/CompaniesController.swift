@@ -13,12 +13,14 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 	
 	var companies = [Company]()
 	
+
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		fetchData()
 		
-		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
+		tableView.register(CompanyCell.self, forCellReuseIdentifier: "cellID")
 		tableView.backgroundColor = .darkBlue
 		navigationItem.title = "Companies"
 		tableView.tableFooterView = UIView()
@@ -97,6 +99,10 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 		return 40
 	}
 	
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 60
+	}
+	
 	override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
 		let label = UILabel()
 		label.text = "Add companies by clicking + button"
@@ -115,24 +121,19 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath)
-		cell.backgroundColor = .tealColor
-		cell.textLabel?.textColor = .white
-		cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-		
+		let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! CompanyCell
 		let company = companies[indexPath.row]
 		if let imageData = company.imageData {
-			cell.imageView?.image = UIImage(data: imageData)
+			cell.companyImage.image = UIImage(data: imageData)
 		} else {
-			cell.imageView?.image = #imageLiteral(resourceName: "select_photo_empty")
+			cell.companyImage.image = #imageLiteral(resourceName: "select_photo_empty")
 		}
-		
 		
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "dd MMMM yyyy"
 		if let founded = company.founded, let name = company.name {
 			let stringDate = dateFormatter.string(from: founded)
-			cell.textLabel?.text = "\(name) founded: \(stringDate)"
+			cell.companyNameFoundedLabel.text = "\(name) founded: \(stringDate)"
 		}
 		return cell
 	}

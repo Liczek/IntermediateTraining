@@ -17,6 +17,7 @@
 		DA5462272125FEFD003E74F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5462252125FEFD003E74F0 /* Main.storyboard */; };
 		DA5462292125FEFF003E74F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5462282125FEFF003E74F0 /* Assets.xcassets */; };
 		DA54622C2125FEFF003E74F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA54622A2125FEFF003E74F0 /* LaunchScreen.storyboard */; };
+		DACD2936213DB8C900A20D0C /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD2935213DB8C900A20D0C /* CompanyCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		DA5462282125FEFF003E74F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA54622B2125FEFF003E74F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA54622D2125FEFF003E74F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DACD2935213DB8C900A20D0C /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			children = (
 				DA5462212125FEFD003E74F0 /* AppDelegate.swift */,
 				DA5462232125FEFD003E74F0 /* CompaniesController.swift */,
+				DACD2935213DB8C900A20D0C /* CompanyCell.swift */,
 				DA49515321260FC4006C5EAC /* CreateCompanyController.swift */,
 				DA49515E21277D3C006C5EAC /* CoreDataManager.swift */,
 				DA5462252125FEFD003E74F0 /* Main.storyboard */,
@@ -153,6 +156,7 @@
 				DA495150212606F8006C5EAC /* UIColor+theme.swift in Sources */,
 				DA49515721275EB8006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld in Sources */,
 				DA5462242125FEFD003E74F0 /* CompaniesController.swift in Sources */,
+				DACD2936213DB8C900A20D0C /* CompanyCell.swift in Sources */,
 				DA49515421260FC4006C5EAC /* CreateCompanyController.swift in Sources */,
 				DA5462222125FEFD003E74F0 /* AppDelegate.swift in Sources */,
 				DA49515F21277D3C006C5EAC /* CoreDataManager.swift in Sources */,
