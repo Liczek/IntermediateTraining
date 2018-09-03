@@ -24,9 +24,7 @@ class CreateCompanyController: UIViewController, UINavigationControllerDelegate,
 			if let imageData = company?.imageData {
 				companyImageView.image = UIImage(data: imageData)
 				makeImageRounded()
-				
 			}
-			
 		}
 	}
 	

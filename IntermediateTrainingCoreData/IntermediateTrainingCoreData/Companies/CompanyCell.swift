@@ -28,8 +28,6 @@ class CompanyCell: UITableViewCell {
 		return label
 	}()
 	
-	
-	
 	override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
 		

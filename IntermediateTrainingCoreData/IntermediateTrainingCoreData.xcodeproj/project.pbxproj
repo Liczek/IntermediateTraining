@@ -18,6 +18,8 @@
 		DA5462292125FEFF003E74F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5462282125FEFF003E74F0 /* Assets.xcassets */; };
 		DA54622C2125FEFF003E74F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA54622A2125FEFF003E74F0 /* LaunchScreen.storyboard */; };
 		DACD2936213DB8C900A20D0C /* CompanyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD2935213DB8C900A20D0C /* CompanyCell.swift */; };
+		DACD2938213DC0D200A20D0C /* CompaniesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD2937213DC0D200A20D0C /* CompaniesController+UITableView.swift */; };
+		DACD293A213DC74B00A20D0C /* CompaniesController+CreateCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACD2939213DC74B00A20D0C /* CompaniesController+CreateCompany.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		DA54622B2125FEFF003E74F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA54622D2125FEFF003E74F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DACD2935213DB8C900A20D0C /* CompanyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyCell.swift; sourceTree = "<group>"; };
+		DACD2937213DC0D200A20D0C /* CompaniesController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+UITableView.swift"; sourceTree = "<group>"; };
+		DACD2939213DC74B00A20D0C /* CompaniesController+CreateCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+CreateCompany.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				DA5462212125FEFD003E74F0 /* AppDelegate.swift */,
-				DA5462232125FEFD003E74F0 /* CompaniesController.swift */,
-				DACD2935213DB8C900A20D0C /* CompanyCell.swift */,
+				DACD293B213DC77900A20D0C /* Companies */,
 				DA49515321260FC4006C5EAC /* CreateCompanyController.swift */,
 				DA49515E21277D3C006C5EAC /* CoreDataManager.swift */,
 				DA5462252125FEFD003E74F0 /* Main.storyboard */,
@@ -80,6 +83,17 @@
 				DA49515121260D76006C5EAC /* Company.swift */,
 			);
 			path = IntermediateTrainingCoreData;
+			sourceTree = "<group>";
+		};
+		DACD293B213DC77900A20D0C /* Companies */ = {
+			isa = PBXGroup;
+			children = (
+				DA5462232125FEFD003E74F0 /* CompaniesController.swift */,
+				DACD2937213DC0D200A20D0C /* CompaniesController+UITableView.swift */,
+				DACD2935213DB8C900A20D0C /* CompanyCell.swift */,
+				DACD2939213DC74B00A20D0C /* CompaniesController+CreateCompany.swift */,
+			);
+			path = Companies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,8 +173,10 @@
 				DACD2936213DB8C900A20D0C /* CompanyCell.swift in Sources */,
 				DA49515421260FC4006C5EAC /* CreateCompanyController.swift in Sources */,
 				DA5462222125FEFD003E74F0 /* AppDelegate.swift in Sources */,
+				DACD2938213DC0D200A20D0C /* CompaniesController+UITableView.swift in Sources */,
 				DA49515F21277D3C006C5EAC /* CoreDataManager.swift in Sources */,
 				DA49515221260D76006C5EAC /* Company.swift in Sources */,
+				DACD293A213DC74B00A20D0C /* CompaniesController+CreateCompany.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
