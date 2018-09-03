@@ -21,6 +21,7 @@ class CompaniesController: UITableViewController, CreateCompanyControllerDelegat
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
 		tableView.backgroundColor = .darkBlue
 		navigationItem.title = "Companies"
+		tableView.tableFooterView = UIView()
 
 		let plusButton = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(addCompanyHandle))
 		navigationItem.setRightBarButton(plusButton, animated: true)
