@@ -39,10 +39,10 @@ extension UIViewController {
 		return lightBlueBackgroundView
 	}
 	
-	func setNameLabel(placeholder: String, constants: CGFloat) -> UITextField {
+	func setRowWithTextfield(rowName: String, placeholder: String, constants: CGFloat, topNeighbor: UIView, isFirstLine: Bool) -> UITextField {
 		let nameLabel: UILabel = {
 			let label = UILabel()
-			label.text = "Name"
+			label.text = rowName
 			label.font = UIFont.boldSystemFont(ofSize: 16)
 			label.translatesAutoresizingMaskIntoConstraints = false
 			return label
@@ -59,7 +59,12 @@ extension UIViewController {
 		view.addSubview(nameLabel)
 		view.addSubview(nameTextField)
 		
-		nameLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: constants).isActive = true
+		if isFirstLine {
+			nameLabel.topAnchor.constraint(equalTo: topNeighbor.topAnchor, constant: constants).isActive = true
+		} else {
+			nameLabel.topAnchor.constraint(equalTo: topNeighbor.bottomAnchor, constant: constants).isActive = true
+		}
+		
 		nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
 		nameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
 		nameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -70,4 +75,19 @@ extension UIViewController {
 		nameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 		return nameTextField
 	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

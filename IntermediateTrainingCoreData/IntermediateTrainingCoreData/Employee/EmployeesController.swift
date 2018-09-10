@@ -24,8 +24,8 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
 		setPlusButton(selector: #selector(addEmployee))
 		
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-		
-		employees = CoreDataManager.shared.fetchEmployee()
+		guard let employesArrey = company?.employees?.allObjects as? [Employee] else {return}
+		employees = employesArrey
 	}
 	
 	@objc private func addEmployee() {
@@ -34,6 +34,7 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
 		let navController = UINavigationController(rootViewController: createEmployeeController)
 		navController.navigationBar.prefersLargeTitles = false
 		createEmployeeController.delegate = self
+		createEmployeeController.company = company
 		present(navController, animated: true, completion: nil)
 	}
 	
@@ -44,7 +45,15 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
 		let employee = employees[indexPath.row]
-		cell.textLabel?.text = employee.name
+		let employeeName = employee.name
+		let employeeTaxId = employee.taxId
+		cell.textLabel?.text = "\(employeeName ?? "")"
+		if let employeeBirthday = employee.employeeinformations?.birthday {
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "dd.MM.yyyy"
+			let birthdayString = dateFormatter.string(from: employeeBirthday)
+			cell.textLabel?.text = "\(employeeName ?? "") - \(employeeTaxId ?? "no id") - \(birthdayString)"
+		}
 		cell.backgroundColor = .tealColor
 		cell.textLabel?.textColor = .white
 		cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 16)

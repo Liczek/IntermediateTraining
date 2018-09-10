@@ -145,7 +145,7 @@ class CreateCompanyController: UIViewController, UINavigationControllerDelegate,
 			constraint.isActive = true
 		}
 		
-		nameTextField = setNameLabel(placeholder: "Add Company name", constants: 100 + 16)
+		nameTextField = setRowWithTextfield(rowName: "Name", placeholder: "Add Company name", constants: 100 + 16, topNeighbor: view, isFirstLine: true)
 		
 		view.addSubview(datePicker)
 		let datePickerConstraints = [
