@@ -30,12 +30,6 @@ class CreateCompanyController: UIViewController, UINavigationControllerDelegate,
 	
 	var delegate: CreateCompanyControllerDelegate?
 	
-	let lightBlueBackgroudView: UIView = {
-		let view = UIView()
-		view.backgroundColor = .lightBlue
-		view.translatesAutoresizingMaskIntoConstraints = false
-		return view
-	}()
 	
 	lazy var companyImageView: UIImageView = {
 		let image = UIImageView(image: #imageLiteral(resourceName: "select_photo_empty"))
@@ -44,22 +38,8 @@ class CreateCompanyController: UIViewController, UINavigationControllerDelegate,
 		image.isUserInteractionEnabled = true
 		return image
 	}()
-	
-	let nameLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Name"
-		label.font = UIFont.boldSystemFont(ofSize: 16)
-		label.translatesAutoresizingMaskIntoConstraints = false
-		return label
-	}()
-	
-	let nameTextField: UITextField = {
-		let textField = UITextField()
-		textField.placeholder = "Enter name of company"
-		textField.font = UIFont.boldSystemFont(ofSize: 16)
-		textField.translatesAutoresizingMaskIntoConstraints = false
-		return textField
-	}()
+	var nameTextField = UITextField()
+	var lightBlueBackgroundView = UIView()
 	
 	let datePicker: UIDatePicker = {
 		let dp = UIDatePicker()
@@ -148,29 +128,15 @@ class CreateCompanyController: UIViewController, UINavigationControllerDelegate,
 		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
 		
-		view.addSubview(lightBlueBackgroudView)
-		view.addSubview(companyImageView)
-		view.addSubview(nameLabel)
-		view.addSubview(nameTextField)
-		view.addSubview(datePicker)
 	}
 	
 	func setConstraints() {
+		lightBlueBackgroundView = setLightBlueBackgroundView(height: 350)
 		
-		let lightBlueBGViewConstraints = [
-			lightBlueBackgroudView.leftAnchor.constraint(equalTo: view.leftAnchor),
-			lightBlueBackgroudView.rightAnchor.constraint(equalTo: view.rightAnchor),
-			lightBlueBackgroudView.topAnchor.constraint(equalTo: view.topAnchor),
-			lightBlueBackgroudView.heightAnchor.constraint(equalToConstant: 350)
-		]
-		lightBlueBGViewConstraints.forEach { (constraint) in
-			constraint.isActive = true
-		}
 		
+		view.addSubview(companyImageView)
 		let companyImageViewConstraints = [
 			companyImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 16),
-//			companyImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-//			companyImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
 			companyImageView.widthAnchor.constraint(equalToConstant: 100),
 			companyImageView.heightAnchor.constraint(equalToConstant: 100),
 			companyImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -178,32 +144,15 @@ class CreateCompanyController: UIViewController, UINavigationControllerDelegate,
 		companyImageViewConstraints.forEach { (constraint) in
 			constraint.isActive = true
 		}
-				
-		let nameLabelConstraints = [
-		nameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
-		nameLabel.widthAnchor.constraint(equalToConstant: 100),
-		nameLabel.topAnchor.constraint(equalTo: companyImageView.bottomAnchor),
-		nameLabel.heightAnchor.constraint(equalToConstant: 50)
-		]
-		nameLabelConstraints.forEach { (constraint) in
-			constraint.isActive = true
-		}
-
-		let nameTextFieldConstraints = [
-			nameTextField.leftAnchor.constraint(equalTo: nameLabel.rightAnchor),
-			nameTextField.topAnchor.constraint(equalTo: nameLabel.topAnchor),
-			nameTextField.bottomAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-			nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor)
-		]
-		nameTextFieldConstraints.forEach { (constraint) in
-			constraint.isActive = true
-		}
 		
+		nameTextField = setNameLabel(placeholder: "Add Company name", constants: 100 + 16)
+		
+		view.addSubview(datePicker)
 		let datePickerConstraints = [
-			datePicker.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
-			datePicker.leadingAnchor.constraint(equalTo: lightBlueBackgroudView.leadingAnchor),
-			datePicker.trailingAnchor.constraint(equalTo: lightBlueBackgroudView.trailingAnchor),
-			datePicker.bottomAnchor.constraint(equalTo: lightBlueBackgroudView.bottomAnchor)
+			datePicker.topAnchor.constraint(equalTo: nameTextField.bottomAnchor),
+			datePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			datePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			datePicker.bottomAnchor.constraint(equalTo: lightBlueBackgroundView.bottomAnchor)
 		]
 		datePickerConstraints.forEach { (constraint) in
 			constraint.isActive = true

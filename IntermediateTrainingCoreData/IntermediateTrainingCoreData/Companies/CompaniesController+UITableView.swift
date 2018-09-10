@@ -9,6 +9,14 @@
 import UIKit
 
 extension CompaniesController {
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let employeeController = EmployeesController()
+		let navController = UINavigationController(rootViewController: employeeController)
+		let company = companies[indexPath.row]
+		employeeController.company = company
+		return present(navController, animated: true, completion: nil)
+	}
 	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 		let view = UIView()
 		view.backgroundColor = .lightBlue

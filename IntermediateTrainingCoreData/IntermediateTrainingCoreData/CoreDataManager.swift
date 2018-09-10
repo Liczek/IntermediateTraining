@@ -43,6 +43,39 @@ struct CoreDataManager {
 		} catch let delBatchErr {
 			print("Failed to deletaeBatchReq", delBatchErr)
 		}
+	}
+	
+	func fetchEmployee() -> [Employee] {
+		let context = persistentContainer.viewContext
+		var employees = [Employee]()
+		let fetchRequest = NSFetchRequest<Employee>(entityName: "Employee")
+		do {
+			employees = try context.fetch(fetchRequest)
+			return employees
+		} catch let fetchErr {
+			print("Failed to fetch Employees", fetchErr)
+		}
+		return[]
+	}
+	
+	func createEmployee(employeeName: String) -> (employee: Employee?, error: Error?) {
+		let context = persistentContainer.viewContext
+		let employee = NSEntityDescription.insertNewObject(forEntityName: "Employee", into: context) as! Employee
+		employee.setValue(employeeName, forKey: "name")
+		do {
+			try context.save()
+			return (employee, nil)
+		} catch let saveErr {
+			print("Failed to save Employee", saveErr)
+			return (nil, saveErr)
+		}
 		
 	}
+	
+	
+	
+	
+	
+	
+	
 }
