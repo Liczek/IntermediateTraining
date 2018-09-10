@@ -144,7 +144,7 @@ class CreateCompanyController: UIViewController, UINavigationControllerDelegate,
 	
 	func addObjects() {
 		
-		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonHandle))
+		setLeftDismissButton(title: "Cancel")
 		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
 		
