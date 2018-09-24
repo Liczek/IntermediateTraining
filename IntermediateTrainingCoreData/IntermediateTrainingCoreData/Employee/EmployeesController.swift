@@ -13,7 +13,7 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
 	let cellID = "cellID"
 	
 	var company: Company?
-	var employees = [Employee]()
+	var employees = [[Employee]]()
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		navigationItem.title = "\(company?.name ?? "")"
@@ -24,8 +24,35 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
 		setPlusButton(selector: #selector(addEmployee))
 		
 		tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
-		guard let employesArrey = company?.employees?.allObjects as? [Employee] else {return}
-		employees = employesArrey
+
+		fetchEmployees()
+	}
+	
+	func fetchEmployees() {
+		guard let employesArray = company?.employees?.allObjects as? [Employee] else {return}
+		
+//		v.1
+//		let referentArray = employesArray.filter { (employee) -> Bool in
+//			return employee.type == EmployeeType.Referent.rawValue
+//		}
+//
+//		let starszyReferentArray = employesArray.filter { (employee) -> Bool in
+//			return employee.type == EmployeeType.StarszyReferent.rawValue
+//		}
+//
+//		let specjalistaArray = employesArray.filter { (employee) -> Bool in
+//			return employee.type == EmployeeType.Specjalista.rawValue
+//		}
+//		v.2
+//		employees = [ employesArray.filter {$0.type == EmployeeType.Referent.rawValue},
+//					  employesArray.filter {$0.type == EmployeeType.StarszyReferent.rawValue},
+//					  employesArray.filter {$0.type == EmployeeType.Specjalista.rawValue}
+//					  ]
+		EmployeeTypes.forEach { (employeeType) in
+			employees.append(
+				employesArray.filter { $0.type == employeeType}
+			)
+		}
 	}
 	
 	@objc private func addEmployee() {
@@ -38,15 +65,34 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
 		present(navController, animated: true, completion: nil)
 	}
 	
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func numberOfSections(in tableView: UITableView) -> Int {
 		return employees.count
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 40
+	}
+	
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+				let label = IndententLabel()
+				label.text = EmployeeTypes[section]
+				label.textColor = .darkBlue
+				label.textAlignment = .left
+				label.font = UIFont.boldSystemFont(ofSize: 16)
+				label.backgroundColor = .lightBlue
+				return label
+	}
+	
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return employees[section].count
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-		let employee = employees[indexPath.row]
+		let employee = employees[indexPath.section][indexPath.row]
 		let employeeName = employee.name
-		let employeeTaxId = employee.taxId
+		let employeeTaxId = employee.employeeinformations?.taxId
 		cell.textLabel?.text = "\(employeeName ?? "")"
 		if let employeeBirthday = employee.employeeinformations?.birthday {
 			let dateFormatter = DateFormatter()
@@ -61,11 +107,11 @@ class EmployeesController: UITableViewController, CreateEmployeeControllerDelega
 	}
 	
 	func didAddEmployee(employee: Employee) {
-		let row = employees.count
-		let newIndexPath = IndexPath(row: row, section: 0)
-		employees.append(employee)
-		tableView.insertRows(at: [newIndexPath], with: .automatic)
-		tableView.reloadData()
+		guard let section = EmployeeTypes.index(of: employee.type!) else {return}
+		let row = employees[section].count
+		let newIndexPath = IndexPath(row: row, section: section)
+		employees[section].append(employee)
+		tableView.insertRows(at: [newIndexPath], with: .left)
 	}
 	
 	

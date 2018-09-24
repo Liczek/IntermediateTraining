@@ -45,24 +45,25 @@ struct CoreDataManager {
 		}
 	}
 	
-	func fetchEmployee() -> [Employee] {
-		let context = persistentContainer.viewContext
-		var employees = [Employee]()
-		let fetchRequest = NSFetchRequest<Employee>(entityName: "Employee")
-		do {
-			employees = try context.fetch(fetchRequest)
-			return employees
-		} catch let fetchErr {
-			print("Failed to fetch Employees", fetchErr)
-		}
-		return[]
-	}
+//	func fetchEmployee() -> [Employee] {
+//		let context = persistentContainer.viewContext
+//		var employees = [Employee]()
+//		let fetchRequest = NSFetchRequest<Employee>(entityName: "Employee")
+//		do {
+//			employees = try context.fetch(fetchRequest)
+//			return employees
+//		} catch let fetchErr {
+//			print("Failed to fetch Employees", fetchErr)
+//		}
+//		return[]
+//	}
 	
-	func createEmployee(employeeName: String, birthday: Date, company: Company) -> (employee: Employee?, error: Error?) {
+	func createEmployee(employeeName: String, type: String, birthday: Date, company: Company) -> (employee: Employee?, error: Error?) {
 		let context = persistentContainer.viewContext
 		let employee = NSEntityDescription.insertNewObject(forEntityName: "Employee", into: context) as! Employee
 		employee.name = employeeName
 		employee.company = company
+		employee.type = type
 		
 		let employeeInformations = NSEntityDescription.insertNewObject(forEntityName: "EmployeeInformations", into: context) as! EmployeeInformations
 		employeeInformations.birthday = birthday

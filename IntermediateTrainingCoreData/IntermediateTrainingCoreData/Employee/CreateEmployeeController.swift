@@ -21,17 +21,40 @@ class CreateEmployeeController: UIViewController {
 	var company: Company?
 	var delegate: CreateEmployeeControllerDelegate?
 	
+	var employeeTypesSegmentedControl: UISegmentedControl = {
+		let sControl = UISegmentedControl(items: EmployeeTypes)
+		sControl.tintColor = .darkBlue
+		sControl.translatesAutoresizingMaskIntoConstraints = false
+		sControl.selectedSegmentIndex = 0
+		return sControl
+	}()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		configureView()
 		
+	}
+	
+	func configureView() {
 		navigationItem.title = "Add Employee for \(company?.name ?? "")"
 		view.backgroundColor = .darkBlue
 		
 		setLeftDismissButton(title: "Cancel")
+		
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+		
 		_ = setLightBlueBackgroundView(height: 150)
+		
 		nameTextField = setRowWithTextfield(rowName: "Name", placeholder: "Add Employee name", constants: 0, topNeighbor: view, isFirstLine: true)
+		
 		dateTextField = setRowWithTextfield(rowName: "Birthday", placeholder: dateFormat, constants: 0, topNeighbor: nameTextField, isFirstLine: false)
+		
+		view.addSubview(employeeTypesSegmentedControl)
+		
+		employeeTypesSegmentedControl.topAnchor.constraint(equalTo: dateTextField.bottomAnchor).isActive = true
+		employeeTypesSegmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 4).isActive = true
+		employeeTypesSegmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -4).isActive = true
+		employeeTypesSegmentedControl.heightAnchor.constraint(equalToConstant: 40).isActive = true
 	}
 	
 	@objc private func handleSave() {
@@ -58,15 +81,15 @@ class CreateEmployeeController: UIViewController {
 			dateTextField.placeholder = dateFormat
 			return
 		}
-		guard let employee = CoreDataManager.shared.createEmployee(employeeName: employeeName, birthday: birthdayDate, company: company).employee else {
+		let index = employeeTypesSegmentedControl.selectedSegmentIndex
+		let employeeType = EmployeeTypes[index]
+		guard let employee = CoreDataManager.shared.createEmployee(employeeName: employeeName, type: employeeType, birthday: birthdayDate, company: company).employee else {
 			print("error during employee creating")
 			return
 		}
 		dismiss(animated: true) {
 			self.delegate?.didAddEmployee(employee: employee)
 		}
-		
-		
 	}
 	
 	func setAlertController(title: String, message: String, textField: UITextField) {
@@ -77,5 +100,4 @@ class CreateEmployeeController: UIViewController {
 		alertController.addAction(alertAction)
 		present(alertController, animated: true, completion: nil)
 	}
-	
 }
