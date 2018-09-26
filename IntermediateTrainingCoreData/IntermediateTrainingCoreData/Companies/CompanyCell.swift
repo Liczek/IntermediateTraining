@@ -10,6 +10,26 @@ import UIKit
 
 class CompanyCell: UITableViewCell {
 	
+	var company: Company? {
+		didSet {
+			companyNameFoundedLabel.text = company?.name
+			
+			if let imageData = company?.imageData {
+				companyImage.image = UIImage(data: imageData)
+			}
+			
+			if let name = company?.name, let founded = company?.founded {
+				let dateFormatter = DateFormatter()
+				dateFormatter.dateFormat = "MMM dd, yyyy"
+				let foundedDateString = dateFormatter.string(from: founded)
+				let dateString = "\(name) - Founded: \(foundedDateString)"
+				companyNameFoundedLabel.text = dateString
+			} else {
+				companyNameFoundedLabel.text = company?.name
+			}
+		}
+	}
+	
 	let companyImage: UIImageView = {
 		let image = UIImageView()
 		image.backgroundColor = UIColor.tealColor

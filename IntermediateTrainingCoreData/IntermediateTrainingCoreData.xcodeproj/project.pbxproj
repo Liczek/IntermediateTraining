@@ -12,6 +12,7 @@
 		DA49515421260FC4006C5EAC /* CreateCompanyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49515321260FC4006C5EAC /* CreateCompanyController.swift */; };
 		DA49515721275EB8006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA49515521275EB8006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld */; };
 		DA49515F21277D3C006C5EAC /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA49515E21277D3C006C5EAC /* CoreDataManager.swift */; };
+		DA52D9F0215C03B1006A9F63 /* CompaniesAutoUpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA52D9EF215C03B1006A9F63 /* CompaniesAutoUpdateController.swift */; };
 		DA5462222125FEFD003E74F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5462212125FEFD003E74F0 /* AppDelegate.swift */; };
 		DA5462242125FEFD003E74F0 /* CompaniesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5462232125FEFD003E74F0 /* CompaniesController.swift */; };
 		DA5462272125FEFD003E74F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5462252125FEFD003E74F0 /* Main.storyboard */; };
@@ -34,6 +35,7 @@
 		DA49515321260FC4006C5EAC /* CreateCompanyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyController.swift; sourceTree = "<group>"; };
 		DA49515621275EB8006C5EAC /* IntermediateTrainingCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = IntermediateTrainingCoreData.xcdatamodel; sourceTree = "<group>"; };
 		DA49515E21277D3C006C5EAC /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		DA52D9EF215C03B1006A9F63 /* CompaniesAutoUpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesAutoUpdateController.swift; sourceTree = "<group>"; };
 		DA54621E2125FEFD003E74F0 /* IntermediateTrainingCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IntermediateTrainingCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5462212125FEFD003E74F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA5462232125FEFD003E74F0 /* CompaniesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesController.swift; sourceTree = "<group>"; };
@@ -84,7 +86,6 @@
 			children = (
 				DA5462212125FEFD003E74F0 /* AppDelegate.swift */,
 				DACD293F213EFDA300A20D0C /* Helpers */,
-				DACD293E213EFBCA00A20D0C /* Employee */,
 				DACD293B213DC77900A20D0C /* Companies */,
 				DA49515E21277D3C006C5EAC /* CoreDataManager.swift */,
 				DA5462252125FEFD003E74F0 /* Main.storyboard */,
@@ -101,11 +102,13 @@
 		DACD293B213DC77900A20D0C /* Companies */ = {
 			isa = PBXGroup;
 			children = (
+				DACD293E213EFBCA00A20D0C /* Employee */,
 				DA5462232125FEFD003E74F0 /* CompaniesController.swift */,
 				DACD2937213DC0D200A20D0C /* CompaniesController+UITableView.swift */,
 				DACD2935213DB8C900A20D0C /* CompanyCell.swift */,
 				DACD2939213DC74B00A20D0C /* CompaniesController+CreateCompany.swift */,
 				DA49515321260FC4006C5EAC /* CreateCompanyController.swift */,
+				DA52D9EF215C03B1006A9F63 /* CompaniesAutoUpdateController.swift */,
 			);
 			path = Companies;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA52D9F0215C03B1006A9F63 /* CompaniesAutoUpdateController.swift in Sources */,
 				DACD293D213EFBC100A20D0C /* EmployeesController.swift in Sources */,
 				DA495150212606F8006C5EAC /* UIColor+theme.swift in Sources */,
 				DA49515721275EB8006C5EAC /* IntermediateTrainingCoreData.xcdatamodeld in Sources */,
